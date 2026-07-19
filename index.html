@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08111f">
+<title>Расходы по поездке в Грузию</title>
+<style>
+:root{
+  --bg:#07111f;--bg2:#0d1a2c;--card:rgba(255,255,255,.075);--line:rgba(255,255,255,.12);
+  --text:#f6f8fc;--muted:#aab6c8;--green:#73e4b7;--blue:#8db9ff;--gold:#ffd27b;
+  --radius:24px;--shadow:0 24px 70px rgba(0,0,0,.32)
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 15% -5%,rgba(93,145,255,.28),transparent 34%),
+    radial-gradient(circle at 95% 12%,rgba(74,230,168,.18),transparent 28%),
+    linear-gradient(155deg,var(--bg),var(--bg2) 62%,#06101b);
+  min-height:100vh;overflow-x:hidden
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.45;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:42px 42px;mask-image:linear-gradient(#000,transparent 80%)
+}
+.container{width:min(1180px,calc(100% - 28px));margin:auto;position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0 8px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:-.02em}
+.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:22px;
+  background:linear-gradient(135deg,rgba(115,228,183,.25),rgba(141,185,255,.22));border:1px solid var(--line)}
+.actions{display:flex;gap:9px}.btn{border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--text);
+  border-radius:14px;padding:11px 15px;font:inherit;cursor:pointer;backdrop-filter:blur(12px);transition:.2s}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.11)}
+.hero{display:grid;grid-template-columns:1.14fr .86fr;gap:40px;align-items:center;padding:68px 0 72px;min-height:590px}
+.eyebrow{display:inline-flex;padding:8px 12px;border-radius:999px;border:1px solid rgba(115,228,183,.22);
+  background:rgba(115,228,183,.08);color:#b4f4dc;font-size:14px;margin-bottom:18px}
+h1{font-size:clamp(44px,7vw,82px);line-height:.98;letter-spacing:-.055em;margin:0 0 22px}
+.lead{font-size:clamp(17px,2vw,21px);line-height:1.58;color:var(--muted);max-width:720px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.chip{padding:10px 13px;border-radius:13px;
+  background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);font-size:14px;color:#dce4ef}
+.total-card{position:relative;padding:28px;border-radius:32px;border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055));box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);overflow:hidden;animation:float 6s ease-in-out infinite}
+.total-card:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-65px;top:-60px;
+  background:radial-gradient(circle,rgba(115,228,183,.35),transparent 68%)}
+@keyframes float{50%{transform:translateY(-7px)}}
+.total-label{color:var(--muted);font-size:14px;margin-bottom:10px}.total{font-size:clamp(44px,5vw,64px);
+  font-weight:830;letter-spacing:-.055em;margin-bottom:18px}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.mini{padding:15px;border-radius:17px;
+  background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.085)}.mini span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.mini strong{font-size:18px}
+section{padding:26px 0 66px}.head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:22px}
+h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.04em;margin:0}.sub{color:var(--muted);line-height:1.55;margin:7px 0 0;max-width:760px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.stat{padding:20px;border-radius:20px;background:var(--card);
+  border:1px solid var(--line)}.stat small{color:var(--muted);display:block;margin-bottom:8px}.stat b{font-size:24px;letter-spacing:-.03em}
+.tabs{display:flex;gap:8px;overflow:auto;padding:7px;border:1px solid rgba(255,255,255,.09);border-radius:17px;
+  background:rgba(255,255,255,.05);width:max-content;max-width:100%;margin-bottom:18px}
+.tab{white-space:nowrap;border:0;border-radius:12px;padding:10px 14px;background:transparent;color:var(--muted);font:inherit;cursor:pointer}
+.tab.active{background:var(--green);color:#07131a;font-weight:700}
+.panel{display:none;animation:in .35s ease}.panel.active{display:block}@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.05);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:14px 17px;border-bottom:1px solid rgba(255,255,255,.075);text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#cfdaea;background:rgba(255,255,255,.04)}
+td.amount{text-align:right;font-weight:680;font-variant-numeric:tabular-nums;white-space:nowrap}tr:last-child td{border-bottom:0}
+.badge{display:inline-flex;padding:6px 9px;border-radius:999px;font-size:12px;border:1px solid rgba(141,185,255,.2);
+  background:rgba(141,185,255,.11);color:#c3d9ff}
+.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.map{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;
+  padding:17px;border-radius:18px;background:var(--card);border:1px solid var(--line)}.map .src{color:#cbd6e5;font-size:13px}.map .arr{color:var(--green)}.map .dst{text-align:right;font-weight:680}
+.days{display:grid;grid-template-columns:1fr 1fr;gap:16px}.day{padding:22px;border-radius:24px;background:var(--card);border:1px solid var(--line)}
+.day.extra{grid-column:1/-1;background:linear-gradient(135deg,rgba(255,210,123,.09),rgba(255,255,255,.05));border-color:rgba(255,210,123,.22)}
+.day-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:13px}.day h3{margin:0;font-size:24px}.day-total{color:var(--green);font-weight:760}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:14px;padding:12px 0;border-top:1px solid rgba(255,255,255,.075);align-items:center}
+.row:first-child{border-top:0}.row .kzt,.row .share{white-space:nowrap;font-weight:670}.row .share{color:#dceaff}
+.final-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:17px}.card{padding:24px;border-radius:25px;background:var(--card);border:1px solid var(--line)}
+.summary-line{display:grid;grid-template-columns:1fr auto;gap:18px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.summary-line:last-child{border-bottom:0;font-size:20px;padding-top:18px}.summary-line span{color:var(--muted)}.summary-line strong{font-variant-numeric:tabular-nums}
+.bar-list{display:grid;gap:15px;margin-top:18px}.bar-label{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:7px}
+.bar-track{height:10px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}.bar{height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--green),var(--blue));transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.note{color:var(--muted);font-size:13px;line-height:1.6;margin-top:16px}.reveal{opacity:0;transform:translateY(22px);transition:.65s}.reveal.visible{opacity:1;transform:none}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:12px 0 44px}
+@media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:42px}.stats{grid-template-columns:1fr 1fr}.map-grid,.days,.final-grid{grid-template-columns:1fr}.day.extra{grid-column:auto}}
+@media(max-width:620px){.container{width:min(100% - 18px,1180px)}header{padding-top:14px}.brand span:last-child{display:none}.actions .btn:first-child{display:none}
+.hero{padding-bottom:42px}.mini-grid{grid-template-columns:1fr}.stats{gap:9px}.stat{padding:15px}.stat b{font-size:19px}.map{grid-template-columns:1fr}.map .arr{transform:rotate(90deg);width:max-content}.map .dst{text-align:left}
+.row{grid-template-columns:1fr auto}.row .kzt{display:none}section{padding-bottom:46px}}
+@media print{body{background:#fff;color:#142033}body:before,.actions,.tabs{display:none}.container{width:100%;padding:0 16px}.hero{min-height:auto;grid-template-columns:1fr 1fr;padding:24px 0}
+.total-card,.stat,.table-wrap,.map,.day,.card{background:#fff;color:#142033;border:1px solid #dce3ec;box-shadow:none}.lead,.sub,.note,.summary-line span,.mini span,.stat small{color:#5d6878}
+.panel{display:block!important;margin-bottom:18px;page-break-inside:avoid}.panel:before{content:attr(data-title);display:block;font-weight:750;font-size:20px;margin:16px 0}.reveal{opacity:1;transform:none}
+th{color:#4f5c70;background:#f6f8fb}td,.map .src,.map .dst{color:#142033}.day-total,.map .arr{color:#087d60}.btn{display:none}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="brand"><div class="logo">🇬🇪</div><span>Georgia Trip · Expenses</span></div>
+  <div class="actions"><button class="btn" onclick="document.getElementById('details').scrollIntoView()">Открыть отчёт</button><button class="btn" onclick="window.print()">Печать / PDF</button></div>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">14–18 июля 2026 · версия по финальному PDF</div>
+    <h1>Расходы по поездке в Грузию</h1>
+    <p class="lead">Интерактивная версия финального отчёта: исходные операции, сопоставление, расчёт по дням и отдельный блок дополнительных расходов.</p>
+    <div class="chips">
+      <div class="chip">Freedom Bank + BCC</div><div class="chip">Курсы НБ РК по датам</div>
+      <div class="chip">Château Mukhrani — 30%</div><div class="chip">Янтарные бусы — 100%</div>
+    </div>
+  </div>
+  <div class="total-card">
+    <div class="total-label">Итоговая доля БА</div>
+    <div class="total"><span id="counter">0</span> ₸</div>
+    <div class="mini-grid">
+      <div class="mini"><span>Все включённые расходы</span><strong>525 290 ₸</strong></div>
+      <div class="mini"><span>Половина общих расходов</span><strong>248 005 ₸</strong></div>
+      <div class="mini"><span>Château Mukhrani, 30%</span><strong>2 266 ₸</strong></div>
+      <div class="mini"><span>Янтарные бусы, 100%</span><strong>21 726 ₸</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="head"><div><h2>Краткая сводка</h2><p class="sub">Все числа ниже перенесены из финального PDF без дополнительного пересчёта.</p></div></div>
+  <div class="stats">
+    <div class="stat"><small>Итоговая доля БА</small><b>271 997 ₸</b></div>
+    <div class="stat"><small>Все расходы</small><b>525 290 ₸</b></div>
+    <div class="stat"><small>Доп. расходы</small><b>83 283 ₸</b></div>
+    <div class="stat"><small>Период</small><b>14–18 июля</b></div>
+  </div>
+</section>
+
+<section id="details" class="reveal">
+  <div class="head"><div><h2>Детализация</h2><p class="sub">Исходные банковские операции и правила их включения в расчёт.</p></div></div>
+  <div class="tabs">
+    <button class="tab active" data-tab="freedom">Freedom Bank</button>
+    <button class="tab" data-tab="bcc">BCC</button>
+    <button class="tab" data-tab="mapping">Сопоставление</button>
+    <button class="tab" data-tab="days">Расчёт по дням</button>
+  </div>
+
+  <div class="panel active" id="freedom" data-title="Freedom Bank">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Дата</th><th>Операция / мерчант</th><th>Сумма</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr><td>14.07</td><td>DND GROUP LTD TBILISI GE</td><td class="amount">−218.71 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>14.07</td><td>LTD STOCKHOLM TBILISI GE</td><td class="amount">−74.57 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>14.07</td><td>MORISI CHAPIDZE TBILISI GE</td><td class="amount">−47.16 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>14.07</td><td>MTATSMINDA PARK TBILISI GE</td><td class="amount">−25.93 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>15.07</td><td>CHUVI · 5 операций</td><td class="amount">−46.37 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>15.07</td><td>LUKOIL TBILISI GE</td><td class="amount">−40.68 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>15.07</td><td>CHATEAU MUKHRANI JSC</td><td class="amount">−50.30 / −16.11 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>16.07</td><td>LTD LOMI TBILISI GE</td><td class="amount">−19.24 USD</td><td><span class="badge">Покупка</span></td></tr>
+        <tr><td>16.07</td><td>PETROL STATION TBILISI GE</td><td class="amount">−40.93 USD</td><td><span class="badge">В обработке</span></td></tr>
+        <tr><td>16.07</td><td>MARTVILI CANYON MARTVILI GE</td><td class="amount">−111.08 USD</td><td><span class="badge">В обработке</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Полная выписка в PDF также содержит такси, парковки, самокаты, возвраты и мелкие операции. Они показаны в исходных данных, но не вошли в согласованный итоговый расчёт.</p>
+  </div>
+
+  <div class="panel" id="bcc" data-title="Bank CenterCredit">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Дата</th><th>Операция / мерчант</th><th>Сумма</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr><td>17.07</td><td>HOTEL GEORGIA LTD</td><td class="amount">−54.72 USD</td><td><span class="badge">Ожидается</span></td></tr>
+        <tr><td>17.07</td><td>PETROL STATION</td><td class="amount">−40.47 USD</td><td><span class="badge">Ожидается</span></td></tr>
+        <tr><td>17.07</td><td>BATUMI BOTANICAL GARDE</td><td class="amount">−39.10 USD</td><td><span class="badge">Ожидается</span></td></tr>
+        <tr><td>17.07</td><td>MTSVANE KONCXI</td><td class="amount">−109.48 USD</td><td><span class="badge">Ожидается</span></td></tr>
+        <tr><td>17.07</td><td>PORTO FRANKO LTD</td><td class="amount">−57.87 USD</td><td><span class="badge">Ожидается</span></td></tr>
+        <tr><td>18.07</td><td>NIKORA</td><td class="amount">−30.63 USD</td><td><span class="badge">Ожидается</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Hotel Georgia и другие несогласованные операции не включены в финальный расчёт.</p>
+  </div>
+
+  <div class="panel" id="mapping" data-title="Сопоставление">
+    <div class="map-grid">
+      <div class="map"><div class="src">DND GROUP LTD</div><div class="arr">→</div><div class="dst">Отель Grafica · 50%</div></div>
+      <div class="map"><div class="src">LTD STOCKHOLM</div><div class="arr">→</div><div class="dst">Поздний обед · 50%</div></div>
+      <div class="map"><div class="src">MORISI CHAPIDZE</div><div class="arr">→</div><div class="dst">Прогулка на лодке · 50%</div></div>
+      <div class="map"><div class="src">MTATSMINDA PARK</div><div class="arr">→</div><div class="dst">Аттракционы · 50%</div></div>
+      <div class="map"><div class="src">CHUVI + 16 USD</div><div class="arr">→</div><div class="dst">Chuvi Bar · 50%</div></div>
+      <div class="map"><div class="src">CHATEAU MUKHRANI · 16.11 USD</div><div class="arr">→</div><div class="dst">Учитывается 30%</div></div>
+      <div class="map"><div class="src">MARTVILI CANYON</div><div class="arr">→</div><div class="dst">Мартвильский каньон · 50%</div></div>
+      <div class="map"><div class="src">Наличные · 120 GEL</div><div class="arr">→</div><div class="dst">Янтарные бусы · 100%</div></div>
+    </div>
+  </div>
+
+  <div class="panel" id="days" data-title="Расчёт по дням">
+    <div class="days">
+      <article class="day">
+        <div class="day-head"><h3>14 июля</h3><span class="day-total">102 278 ₸ в итог</span></div>
+        <div class="row"><span>Отель Grafica</span><span class="kzt">104 349 ₸</span><span class="share">52 174 ₸</span></div>
+        <div class="row"><span>Поздний обед</span><span class="kzt">35 578 ₸</span><span class="share">17 789 ₸</span></div>
+        <div class="row"><span>Прогулка на лодке</span><span class="kzt">22 501 ₸</span><span class="share">11 250 ₸</span></div>
+        <div class="row"><span>Мтацминда</span><span class="kzt">12 371 ₸</span><span class="share">6 186 ₸</span></div>
+        <div class="row"><span>Chuvi Bar</span><span class="kzt">29 757 ₸</span><span class="share">14 879 ₸</span></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h3>15 июля</h3><span class="day-total">16 314 ₸ в итог</span></div>
+        <div class="row"><span>Заправка</span><span class="kzt">19 074 ₸</span><span class="share">9 537 ₸</span></div>
+        <div class="row"><span>Château Mukhrani</span><span class="kzt">7 554 ₸</span><span class="share">2 266 ₸</span></div>
+        <div class="row"><span>Магазин перед ЧМ</span><span class="kzt">9 021 ₸</span><span class="share">4 511 ₸</span></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h3>16 июля</h3><span class="day-total">35 700 ₸ в итог</span></div>
+        <div class="row"><span>Заправка</span><span class="kzt">19 225 ₸</span><span class="share">9 613 ₸</span></div>
+        <div class="row"><span>Мартвильский каньон</span><span class="kzt">52 175 ₸</span><span class="share">26 088 ₸</span></div>
+      </article>
+
+      <article class="day">
+        <div class="day-head"><h3>17 июля</h3><span class="day-total">65 201 ₸ в итог</span></div>
+        <div class="row"><span>Заправка</span><span class="kzt">19 014 ₸</span><span class="share">9 507 ₸</span></div>
+        <div class="row"><span>Ботанический сад</span><span class="kzt">18 370 ₸</span><span class="share">9 185 ₸</span></div>
+        <div class="row"><span>Зиплайн</span><span class="kzt">51 437 ₸</span><span class="share">25 718 ₸</span></div>
+        <div class="row"><span>Ужин</span><span class="kzt">27 189 ₸</span><span class="share">13 595 ₸</span></div>
+        <div class="row"><span>Магазин перед бассейном</span><span class="kzt">14 391 ₸</span><span class="share">7 195 ₸</span></div>
+      </article>
+
+      <article class="day extra">
+        <div class="day-head"><h3>Дополнительные расходы</h3><span class="day-total">52 504 ₸ в итог</span></div>
+        <div class="row"><span>Хозяину машины · 70 GEL</span><span class="kzt">12 674 ₸</span><span class="share">6 337 ₸</span></div>
+        <div class="row"><span>Водные аттракционы · 30 GEL</span><span class="kzt">5 432 ₸</span><span class="share">2 716 ₸</span></div>
+        <div class="row"><span>Отель Green House · 240 GEL</span><span class="kzt">43 452 ₸</span><span class="share">21 726 ₸</span></div>
+        <div class="row"><span>Янтарные бусы · 120 GEL</span><span class="kzt">21 726 ₸</span><span class="share">21 726 ₸</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="head"><div><h2>Финальный итог</h2><p class="sub">Сводка полностью соответствует последней версии PDF.</p></div></div>
+  <div class="final-grid">
+    <div class="card">
+      <b style="font-size:20px">Вклад блоков в итог</b>
+      <div class="bar-list">
+        <div><div class="bar-label"><span>14 июля</span><b>102 278 ₸</b></div><div class="bar-track"><div class="bar" data-w="100"></div></div></div>
+        <div><div class="bar-label"><span>15 июля</span><b>16 314 ₸</b></div><div class="bar-track"><div class="bar" data-w="16"></div></div></div>
+        <div><div class="bar-label"><span>16 июля</span><b>35 700 ₸</b></div><div class="bar-track"><div class="bar" data-w="35"></div></div></div>
+        <div><div class="bar-label"><span>17 июля</span><b>65 201 ₸</b></div><div class="bar-track"><div class="bar" data-w="64"></div></div></div>
+        <div><div class="bar-label"><span>Доп. расходы</span><b>52 504 ₸</b></div><div class="bar-track"><div class="bar" data-w="51"></div></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <b style="font-size:20px">Сводный расчёт</b>
+      <div class="summary-line"><span>14.07.2026</span><strong>102 278 ₸</strong></div>
+      <div class="summary-line"><span>15.07.2026</span><strong>16 314 ₸</strong></div>
+      <div class="summary-line"><span>16.07.2026</span><strong>35 700 ₸</strong></div>
+      <div class="summary-line"><span>17.07.2026</span><strong>65 201 ₸</strong></div>
+      <div class="summary-line"><span>Доп. расходы</span><strong>52 504 ₸</strong></div>
+      <div class="summary-line"><span>ИТОГО</span><strong>271 997 ₸</strong></div>
+      <p class="note">Курсы из PDF: 14.07 — 477,11 ₸/USD; 15.07 — 468,88 ₸/USD; 16.07 — 469,71 ₸/USD; 17.07 — 469,83 ₸/USD; GEL — 181,05 ₸.</p>
+    </div>
+  </div>
+</section>
+</main>
+<footer>Интерактивная версия отчёта · Georgia Trip 2026</footer>
+</div>
+
+<script>
+const target=271997,el=document.getElementById("counter"),fmt=new Intl.NumberFormat("ru-RU"),start=performance.now(),duration=1400;
+function tick(t){const p=Math.min((t-start)/duration,1),e=1-Math.pow(1-p,4);el.textContent=fmt.format(Math.round(target*e));if(p<1)requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));t.classList.add("active");document.getElementById(t.dataset.tab).classList.add("active")});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");e.target.querySelectorAll?.(".bar").forEach(b=>b.style.width=b.dataset.w+"%")}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(x=>obs.observe(x));
+</script>
+</body>
+</html>
